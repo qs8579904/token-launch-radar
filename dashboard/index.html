@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<meta name="description" content="A radar of DeFi protocols that have not launched a token yet, ranked by modelled implied value, with a farm plan for each.">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip-link" href="#board-section">Skip to the board</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-word">TOKEN RADAR</span>
+      <span class="brand-sub">pre-token protocol board</span>
+    </div>
+    <dl class="masthead-stats" id="masthead-stats">
+      <div><dt>Snapshot</dt><dd id="stat-asof">—</dd></div>
+      <div><dt>Watchlist</dt><dd id="stat-watchlist">—</dd></div>
+      <div><dt>Board rows</dt><dd id="stat-board">—</dd></div>
+      <div><dt>Early rows</dt><dd id="stat-early">—</dd></div>
+      <div><dt>Live tokens</dt><dd id="stat-live">—</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro" aria-labelledby="page-title">
+    <h1 id="page-title">Protocols with no token yet, ranked by what a launch could be worth</h1>
+    <p class="intro-lede" id="intro-lede">Loading the snapshot…</p>
+  </section>
+
+  <aside class="judge-note" aria-label="Note for the judge">
+    <h2>How to read this board</h2>
+    <p>This radar ranks DeFi protocols that have no token on record, by the implied value of a future token launch. Each protocol&rsquo;s value is modelled as TVL times a category multiple &mdash; calibrated from this snapshot&rsquo;s own live-token protocols, as the median market-cap-to-TVL ratio per category, shrunk toward the global median &mdash; times growth, maturity and chain-breadth multipliers, with no hardcoded protocol lists. Every farm plan is derived from that protocol&rsquo;s own record: its category, chains, TVL and age.</p>
+  </aside>
+
+  <section class="filters" aria-label="Filter the board">
+    <div class="filter-field">
+      <label for="filter-search">Search</label>
+      <input id="filter-search" type="search" placeholder="Name or slug…" autocomplete="off">
+    </div>
+    <div class="filter-field">
+      <label for="filter-category">Category</label>
+      <select id="filter-category">
+        <option value="">All categories</option>
+      </select>
+    </div>
+    <div class="filter-field">
+      <label for="filter-chain">Chain</label>
+      <select id="filter-chain">
+        <option value="">All chains</option>
+      </select>
+    </div>
+    <div class="filter-field">
+      <label for="filter-min-implied">Min implied value ($M)</label>
+      <input id="filter-min-implied" type="number" min="0" step="1" placeholder="e.g. 100">
+    </div>
+    <label class="filter-check">
+      <input id="filter-watchlist" type="checkbox">
+      <span>Watchlist only</span>
+    </label>
+    <button id="filter-clear" type="button" class="btn-ghost">Clear filters</button>
+    <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="detail" id="detail" aria-labelledby="detail-title" hidden>
+    <div class="detail-head">
+      <div>
+        <p class="detail-kicker" id="detail-kicker"></p>
+        <h2 id="detail-title"></h2>
+        <p class="detail-sub" id="detail-sub"></p>
+      </div>
+      <button id="detail-close" type="button" class="btn-ghost">Close ×</button>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h3>Model breakdown</h3>
+        <p class="detail-formula" id="detail-formula"></p>
+        <dl class="factors" id="detail-factors"></dl>
+        <p class="detail-check" id="detail-check"></p>
+      </div>
+      <div class="detail-block">
+        <h3>Protocol record</h3>
+        <dl class="record" id="detail-record"></dl>
+      </div>
+    </div>
+    <div class="detail-block">
+      <h3>Farm plan — 7 steps</h3>
+      <ol class="farm-steps" id="detail-steps"></ol>
+    </div>
+  </section>
+
+  <section class="board-section" id="board-section" aria-labelledby="board-title">
+    <div class="section-head">
+      <h2 id="board-title">The board</h2>
+      <p>Ranked by implied value, strongest first. Select a row for its model breakdown and farm plan.</p>
+    </div>
+    <div class="table-wrap">
+      <table id="board-table">
+        <thead>
+          <tr>
+            <th scope="col" class="num">Rank</th>
+            <th scope="col">Protocol</th>
+            <th scope="col">Category</th>
+            <th scope="col">Chains</th>
+            <th scope="col" class="num">TVL</th>
+            <th scope="col" class="num">7d</th>
+            <th scope="col" class="num">Implied value</th>
+            <th scope="col" class="num">Age</th>
+          </tr>
+        </thead>
+        <tbody id="board-body"></tbody>
+      </table>
+      <p class="empty-note" id="board-empty" hidden>No protocol matches the current filters. Clear a filter to see the board again.</p>
+    </div>
+  </section>
+
+  <section class="live-section" id="live-section" aria-labelledby="live-title">
+    <div class="section-head">
+      <h2 id="live-title">Live tokens — the market&rsquo;s own values</h2>
+      <p>These protocols already trade. Their market caps are real market values, not model values, and they are kept out of the pre-token ranking. The mcap/TVL column is the ratio the category multiples are calibrated from.</p>
+    </div>
+    <div class="table-wrap">
+      <table id="live-table">
+        <thead>
+          <tr>
+            <th scope="col">Protocol</th>
+            <th scope="col">Category</th>
+            <th scope="col">Chains</th>
+            <th scope="col" class="num">TVL</th>
+            <th scope="col" class="num">7d</th>
+            <th scope="col" class="num">Market cap</th>
+            <th scope="col" class="num">Mcap / TVL</th>
+          </tr>
+        </thead>
+        <tbody id="live-body"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">
+  <div class="foot-inner">
+    <section aria-labelledby="method-title">
+      <h2 id="method-title">Method</h2>
+      <p id="method-text">Implied value = TVL × category multiple × growth multiplier × maturity multiplier × chain multiplier. The category multiple is the median mcap/TVL of the snapshot&rsquo;s live-token protocols in the same category, shrunk toward the global median, so a thin category cannot set an extreme multiple on its own. Growth follows the protocol&rsquo;s 7-day TVL change, maturity rises with the time it has run with no token, and chain breadth rewards protocols live on more chains. The model uses only figures from the sealed snapshot; no protocol is named or hand-picked anywhere in the code. Implied values are estimates, not prices and not a promise of a launch.</p>
+      <p class="foot-meta" id="foot-meta"></p>
+    </section>
+    <section aria-labelledby="source-title">
+      <h2 id="source-title">Source</h2>
+      <p id="source-text">—</p>
+      <p class="foot-meta">Static page. No network, no fonts, no tracking. All data is read from the data file loaded beside this page.</p>
+    </section>
+  </div>
+</footer>
+
+<noscript><p class="noscript">This board needs JavaScript to render the data file. The data itself lives in data.js next to this page.</p></noscript>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
